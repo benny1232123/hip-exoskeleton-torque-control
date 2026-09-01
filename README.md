@@ -42,7 +42,7 @@
 
 ### 图1：健康人步态生物力学曲线
 
-![gait_curves_all_subjects](gait_data/processed/gait_curves_all_subjects.png)
+![gait_curves_all_subjects](processed/gait_curves_all_subjects.png)
 
 **22个健康受试者平地行走的平均曲线（680个步态周期）**
 
@@ -61,7 +61,7 @@
 
 ### 图2：生物力矩控制器参数
 
-![biological_torque_controller_all](gait_data/processed/biological_torque_controller_all.png)
+![biological_torque_controller_all](processed/biological_torque_controller_all.png)
 
 **生物力矩控制器的设计参数和参考曲线**
 
@@ -80,7 +80,7 @@
 
 ### 图3：单试验控制器演示
 
-![biological_torque_controller_demo_all](gait_data/processed/biological_torque_controller_demo_all.png)
+![biological_torque_controller_demo_all](processed/biological_torque_controller_demo_all.png)
 
 **在 AB06 受试者的一个试验上演示控制器工作过程**
 
