@@ -1,4 +1,14 @@
 """
+DEPRECATED - Part 1 only (≈7 subjects). Kept for provenance.
+
+Superseded by ../pan2023_full_dataset.py, whose Figure 1 plots the same
+curves across all 22 subjects (and adds the ±1 std band to the left column).
+
+Differences vs the current pipeline:
+  * reads processed/levelground_part1.csv instead of levelground_all.csv
+  * draws a mean±std figure AND a per-subject figure as two separate files
+  * writes gait_curves_part1.png / gait_curves_per_subject.png
+
 Visualize healthy human gait curves from Camargo 2021 dataset.
 Plot hip/knee/ankle flexion-extension angles and moments.
 """
@@ -7,8 +17,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parent.parent  # archive/ -> repo root
+PROCESSED = REPO_ROOT / "processed"
+
 # Load data
-csv_path = Path(r"E:\外骨骼算法\gait_data\processed\levelground_part1.csv")
+csv_path = PROCESSED / "levelground_part1.csv"
+if not csv_path.exists():
+    raise FileNotFoundError(
+        f"{csv_path} not found. Generate it first:\n"
+        f"    python process_part1.py\n"
+        f"(processed/*.csv is deliberately git-ignored, see .gitignore)"
+    )
+
 df = pd.read_csv(csv_path)
 print(f"Loaded: {len(df)} rows, {len(df.columns)} cols")
 print(f"Subjects: {sorted(df['subject'].unique())}")
@@ -102,7 +122,7 @@ axes[0, 0].set_title('Joint Angles (Right Side)')
 axes[0, 1].set_title('Joint Moments (Right Side)')
 
 plt.tight_layout()
-out_path = Path(r"E:\外骨骼算法\gait_data\processed\gait_curves_part1.png")
+out_path = PROCESSED / "gait_curves_part1.png"
 plt.savefig(out_path, dpi=150, bbox_inches='tight')
 print(f"\nSaved: {out_path}")
 plt.close()
@@ -140,7 +160,7 @@ axes[0, 0].set_title('Joint Angles (Right Side)')
 axes[0, 1].set_title('Joint Moments (Right Side)')
 
 plt.tight_layout()
-out_path2 = Path(r"E:\外骨骼算法\gait_data\processed\gait_curves_per_subject.png")
+out_path2 = PROCESSED / "gait_curves_per_subject.png"
 plt.savefig(out_path2, dpi=150, bbox_inches='tight')
 print(f"Saved: {out_path2}")
 plt.close()

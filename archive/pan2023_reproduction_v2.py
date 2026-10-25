@@ -1,6 +1,17 @@
 """
-Pan 2023 Biological Torque Controller - Fixed version
-Uses original time-series data for gait phase estimation
+DEPRECATED - Part 1 only (≈7 subjects). Kept for provenance.
+
+Superseded by ../pan2023_full_dataset.py, which runs the same controller on all
+22 subjects and produces the figures actually used in the README.
+
+The differences that make this a dead end:
+  * reads processed/levelground_part1.csv instead of levelground_all.csv
+  * plots Gaussian components rather than per-subject hip moments
+  * writes *_demo.png / *_profiles.png, which nothing downstream consumes
+
+Originally titled "Pan 2023 Biological Torque Controller - Fixed version":
+controller evaluated on the original time series rather than on resampled
+cycles.
 """
 import numpy as np
 import pandas as pd
@@ -8,10 +19,20 @@ import matplotlib.pyplot as plt
 from scipy.signal import butter, filtfilt, find_peaks
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parent.parent  # archive/ -> repo root
+PROCESSED = REPO_ROOT / "processed"
+
 # ============================================================
 # 1. Load data
 # ============================================================
-csv_path = Path(r"E:\外骨骼算法\gait_data\processed\levelground_part1.csv")
+csv_path = PROCESSED / "levelground_part1.csv"
+if not csv_path.exists():
+    raise FileNotFoundError(
+        f"{csv_path} not found. Generate it first:\n"
+        f"    python process_part1.py\n"
+        f"(processed/*.csv is deliberately git-ignored, see .gitignore)"
+    )
+
 df = pd.read_csv(csv_path)
 print(f"Loaded: {len(df)} rows")
 
@@ -148,7 +169,7 @@ lines2, labels2 = ax4_twin.get_legend_handles_labels()
 axes[3].legend(lines1 + lines2, labels1 + labels2, loc='upper right')
 
 plt.tight_layout()
-out_path = Path(r"E:\外骨骼算法\gait_data\processed\biological_torque_controller_demo.png")
+out_path = PROCESSED / "biological_torque_controller_demo.png"
 plt.savefig(out_path, dpi=150, bbox_inches='tight')
 print(f"\nSaved: {out_path}")
 plt.close()
@@ -260,7 +281,7 @@ ax4.grid(True, alpha=0.3)
 ax4.axhline(y=0, color='k', linestyle='--', alpha=0.5)
 
 plt.tight_layout()
-out_path2 = Path(r"E:\外骨骼算法\gait_data\processed\biological_torque_controller_profiles.png")
+out_path2 = PROCESSED / "biological_torque_controller_profiles.png"
 plt.savefig(out_path2, dpi=150, bbox_inches='tight')
 print(f"Saved: {out_path2}")
 plt.close()

@@ -1,0 +1,10 @@
+# Core numerics / data handling
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+
+# Plotting
+matplotlib>=3.7
+
+# Reader for the Camargo 2021 MATLAB .mat files (import name: `matio`)
+mat-io>=0.1

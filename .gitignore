@@ -1,4 +1,5 @@
 # ---- 不入库：虚拟环境 ----
+.venv/
 .venv_mat2csv/
 
 # ---- 不入库：原始实验数据（Part1-3 为 .mat 原始数据，体量 10G+）----
@@ -6,8 +7,11 @@ Part1/
 Part2/
 Part3/
 
-# ---- 不入库：大规模处理结果 CSV（含 1.47GB levelground_all.csv 等）----
+# ---- 不入库：大规模处理结果 CSV（含 ~1.5GB levelground_all.csv 等）----
 processed/*.csv
+
+# ---- 不入库：批量提取时的中间产物 ----
+processed/_tmp_batch/
 
 # ---- 不入库：agent / 个人内存数据 ----
 .workbuddy/
